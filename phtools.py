@@ -7,6 +7,7 @@
 import gudhi as gd
 import numpy as np
 import sys
+from misc import persloopfolder
 
 peps = 10**(-7)
 threeD = True
