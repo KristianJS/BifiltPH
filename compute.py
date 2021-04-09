@@ -73,18 +73,18 @@ def compute_homology(name,\
     #Set the output path
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % name
-            outpath_root_figs = headfolder + 'Figures/threeD/%s/reversed' % name
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % name
+            outpath_root_figs = headfolder + './Figures/threeD/%s/reversed' % name
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % name
-            outpath_root_figs = headfolder + 'Figures/threeD/%s/standard' % name
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % name
+            outpath_root_figs = headfolder + './Figures/threeD/%s/standard' % name
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (name, name, perc_to_keep)
-             outpath_root_figs = headfolder + 'Figures/threeD/%s/reversed/%s-Perc%s' % (name, name, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (name, name, perc_to_keep)
+             outpath_root_figs = headfolder + './Figures/threeD/%s/reversed/%s-Perc%s' % (name, name, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (name, name, perc_to_keep)
-             outpath_root_figs = headfolder + 'Figures/threeD/%s/standard/%s-Perc%s' % (name, name, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (name, name, perc_to_keep)
+             outpath_root_figs = headfolder + './Figures/threeD/%s/standard/%s-Perc%s' % (name, name, perc_to_keep)
     make_path(outpath_root)
     make_path(outpath_root_figs)
     
