@@ -6,9 +6,9 @@
 
 
 Code to carry out analysis of topological structure in the phase space of
-a dynamical system. In particular, to compute persistent 1-cycles (i.e. loops)
-and visualise sensible representatives of these. Done using a bifiltration
-across density-distance space.
+a dynamical system. In particular, to compute persistent 0-cycles (i.e. components)
+and persistent 1-cycles (i.e. loops) and visualise sensible representatives 
+of these. Done using a bifiltration across density-distance space.
 
 This code was the basis for all the analysis carried out in the paper
 "A topological perspective on regimes in dynamical systems" by 
@@ -45,6 +45,7 @@ for explanations of arguments.
   #Checkout the commit used in this work
   > git checkout 165b1412d0ec70128cc393477e2e1480708bbeed
   > mkdir bin
+  > cd bin
   > cmake ../perloop-src
   > cmake --build .
 

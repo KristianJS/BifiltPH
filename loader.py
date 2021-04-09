@@ -89,7 +89,7 @@ def load_filt(name, method='GaussianKDE', identifier=None,\
         if perc_to_keep == 'XXX':
             data = load_raw(orig_name)
         else:
-            datadir = headfolder + 'Data/Filtered'
+            datadir = headfolder + './Data/Filtered'
             if identifier is None:
                 if reverse_order:
                     fname = '%s/%s/%s_filtered_leastdense_%s_percent_%sbins_%s.txt' % (datadir, orig_name, orig_name, perc_to_keep, num_bins, method)
@@ -128,14 +128,14 @@ def load_from_pers(name, max_edge=None, min_pers=None, sparse=0.7, pre_sparse=No
 
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % basename
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % basename
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
 
 
 
@@ -191,14 +191,14 @@ def load_loops(name, max_edge=None, min_pers=None, sparse=0.7, pre_sparse=None,\
 
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % basename
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % basename
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
  
 
     filtdata = load_filt(name, method=method, reverse_order=reverse_order, eofs=eofs)
@@ -251,14 +251,14 @@ def load_comps(name, num2keep=5,\
 
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % basename
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % basename
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
    
 
     filtdata = load_filt(name, method=method, reverse_order=reverse_order, eofs=eofs)
@@ -309,14 +309,14 @@ def load_comp_deaths(name, num2keep=5,\
 
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % basename
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % basename
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
     
     
     filtdata = load_filt(name, method=method, reverse_order=reverse_order, eofs=eofs)
@@ -380,14 +380,14 @@ def load_loop_lives(name, num2keep=5,\
 
     if perc_to_keep is None:
         if reverse_order:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/reversed' % basename
         else:
-            outpath_root = headfolder + 'Data/Processed/Loops/%s/standard' % basename
+            outpath_root = headfolder + './Data/Processed/Loops/%s/standard' % basename
     else:
         if reverse_order:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/reversed/%s-Perc%s' % (basename, basename, perc_to_keep)
         else:
-             outpath_root = headfolder + 'Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
+             outpath_root = headfolder + './Data/Processed/Loops/%s/standard/%s-Perc%s' % (basename, basename, perc_to_keep)
    
 
     filtdata = load_filt(name, method=method, reverse_order=reverse_order, eofs=eofs)
