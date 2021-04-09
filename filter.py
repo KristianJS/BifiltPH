@@ -28,7 +28,7 @@ def filt_raw_kde(name, perc_to_keep, identifier=None,\
 
     #Determine filename and check if the filtered data already exists.
     #If it does, return, unless overwrite=True
-    outdir = headfolder+'./Data/Filtered/%s' % name
+    outdir = headfolder+'/Data/Filtered/%s' % name
     make_path(outdir)
 
     method = 'GaussianKDE'
@@ -155,7 +155,7 @@ def filt_raw_eofbins(name, perc_to_keep, num_bins=120, num_hist_dims=3,\
 
     #Determine filename and check if the filtered data already exists.
     #If it does, return, unless overwrite=True
-    outdir = headfolder+'./Data/Filtered/%s' % name
+    outdir = headfolder+'/Data/Filtered/%s' % name
     make_path(outdir)
    
     if mode == 'bin_means':
@@ -353,7 +353,7 @@ def filt_raw_speed(name, perc_to_keep, identifier=None,\
 
     #Determine filename and check if the filtered data already exists.
     #If it does, return, unless overwrite=True
-    outdir = headfolder+'./Data/Filtered/%s' % name
+    outdir = headfolder+'/Data/Filtered/%s' % name
     make_path(outdir)
 
     method = 'PhaseSpeed'
