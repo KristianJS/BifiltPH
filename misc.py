@@ -13,7 +13,8 @@ Random stuff which is useful
 
 
 #Top level directory of code
-headfolder  = '.'
+headfolder  = os.path.dirname(os.path.realpath(__file__))
+print(headfolder)
 persloopfolder = None
 assert persloopfolder is not None, "Please specify persloop location"
 
@@ -90,4 +91,5 @@ def num2month(num):
                       7 : 'Jul', 8 : 'Aug', 9 : 'Sep', 10 : 'Oct', 11 : 'Nov', 12 : 'Dec'}
 
     return num2month_dict[num]
+
 
