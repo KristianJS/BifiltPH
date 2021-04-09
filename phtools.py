@@ -1,8 +1,8 @@
 
 #NOTES
-#To do more than 3D pers you need to change 2 lines
-#L146/148 Now depends on logical statement, no change necessary
-#L194/195 Now depends on logical statement, no change necessary
+#To do more than 3D pers you need to change threeD=False
+#and compile the all-dim version of persloop
+#this is unsupport by this work.
 
 import gudhi as gd
 import numpy as np
@@ -10,6 +10,7 @@ import sys
 
 peps = 10**(-7)
 threeD = True
+assert threeD
 
 
 #Compute Euclidean distance between two points defined by data indices
@@ -380,9 +381,11 @@ def runpersloop(nme):
     print(' Starting persloop routine')
     rmfloops(nme)
     if threeD:
-        exc = '/network/aopp/chaos/pred/chantry/PHolo/Software/Persloop-viewer/perloop-src/build/persloop'
+        exc = f"{persloopfolder}/persloop"
     else:
-        exc = '/network/aopp/chaos/pred/chantry/PHolo/Software/Persloop-viewer/persloop-src-all-dim/build/persloop'
+        #This should be the version of persloop compiled
+        #from persloop-src-all-dim
+        exc = f"{persloopfolder}/persloop-src-all-dim/build/persloop"
     command = '%s -f %sf.txt -s %spers'%(exc,nme,nme)
     print(' Executing: %s'%command)
     result = subprocess.check_output([command], stderr=subprocess.STDOUT,shell=True)
@@ -399,34 +402,6 @@ def runpersloop(nme):
         print(" Persloop successfully ran")
     return 0
     
-
-def loadgenus():
-    #Load example dataset
-    fn = '/network/aopp/chaos/pred/chantry/PHolo/Software/Persloop-viewer/persloop-example/genus3_r_200f.txt'
-    data = []
-    with open(fn,'r') as f:
-        for i,l in enumerate(f.readlines()):
-            if i == 0:
-                nele = ([int(j) for j in l.split(" ")][-1])
-            if i > 0 and i <=nele:
-                data.append([float(j) for j in l.split(" ")])
-    data = np.array(data)
-    return data
-
-
-def loadbojito():
-    #Load example dataset
-    fn = '/network/aopp/chaos/pred/chantry/PHolo/Software/Persloop-viewer/PersLoop-Viewer-Script/input/botijo_002f.txt'
-    data = []
-    with open(fn,'r') as f:
-        for i,l in enumerate(f.readlines()):
-            if i == 0:
-                nele = ([int(j) for j in l.split(" ")][-1])
-            if i > 0 and i <=nele:
-                data.append([float(j) for j in l.split(" ")])
-    data = np.array(data)
-    return data
-
 
 def getloop(num,dr):
     #Load a loop from a dir

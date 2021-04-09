@@ -14,7 +14,8 @@ Random stuff which is useful
 
 #Top level directory of code
 headfolder  = '.'
-
+persloopfolder = None
+assert persloopfolder is not None, "Please specify persloop location"
 
 
 #Format and dpi of figures
@@ -59,7 +60,6 @@ def default_minpers(data, name):
         #scaling = 130.
         scaling = 30.
 
-    #print("(default_minpers) NB: scaling factor used = %s" % scaling)
     
     #Default is to first compute the pairwise distances, take the minimum
     #across all the pairwise distances (reducing the NxN matrix to N) and then

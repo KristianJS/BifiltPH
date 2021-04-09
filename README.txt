@@ -29,15 +29,42 @@ for explanations of arguments.
 
     *** HOW TO USE ***
 
-* Install the conda environment using the supplied yaml file and make sure
-  to activate it before running.
+* Install the conda environment using the supplied yaml file:
+  
+  > conda env create -f env.yaml
 
-* Install PersLoop.
+  Its default name is 'pholo'. Make sure to activate it before running:
+
+  > conda activate pholo
+
+* Install PersLoop using the following commands:
+
+  > git clone https://github.com/Sayan-m90/Persloop-viewer.git
+  > cd Persloop-viewer
+  
+  #Checkout the commit used in this work
+  > git checkout 165b1412d0ec70128cc393477e2e1480708bbeed
+  > mkdir bin
+  > cmake ../perloop-src
+  > cmake --build .
 
 * In misc.py, change the headfolder variable to the full path of wherever
-  you are putting this repo.
+  you are putting this repo, and also update the persloopfolder variable
+  to wherever you put PersLoop,
 
-* Run > python bifiltration.py DATASETNAME --optargs
+  e.g. persloopfolder = "~/Persloop-viewer/bin/src/"
+
+* To run a generic example using existing data, you can do
+
+  > python bifiltration.py Lorenz63
+
+  For other optional arguments, see the help statement:
+
+  > ./bifiltration.py -h
+
+
+
+    *** ADDING NEW DATASETS ***
 
 
 When adding a new dataset, you need to update loader.py appropriately.
@@ -45,6 +72,12 @@ It is also strongly recommended to add customised parameter choices in
 bifiltration.py, since the default parameters may give bad performance
 for your dataset. Similarly, in plots.py, parameter choices should be set,
 which handle what angle to view the dataset from in 3D etc.
+
+
+
+    *** CONTACT DETAILS AND BUGS ***
+
+Please report bugs as an issue, or email kristianjstr@gmail.com
 
 Please forgive idiosyncracies of this code. An attempt was made to balance
 flexibility, ease of use and readability. No doubt we failed in many regards.
