@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#        TOPOLOGICAL ANALYSIS OF DYNAMICAL SYSTEMS                             #
+#            TOPOLOGICAL ANALYSIS OF DYNAMICAL SYSTEMS                         #
 #                                                                              #
 ################################################################################
 
@@ -12,22 +12,25 @@ of these. Done using a bifiltration across density-distance space.
 
 This code was the basis for all the analysis carried out in the paper
 "A topological perspective on regimes in dynamical systems" by 
-K. Strommen, M. Chantry, J. Dorrington and N. Otter (2020).
+K. Strommen, M. Chantry, J. Dorrington and N. Otter (2021).
 
 
-    *** BASICS ***
+      *** BASICS ***
 
-The main script is bifiltration.py, which loads a raw dataset, filters it by
-density, computes a bifiltration of homology, and then generates basic plots.
-All output and figures automatically stored. There are optargs that are helpful
+The main script is bifiltration.py, which loads a raw dataset (with loader.py), 
+filters it by density (with filter.py), computes a bifiltration of homology
+(with compute.py), and then generates basic plots (with plots.py).
+
+All output and figures are automatically stored. There are optargs that are helpful
 when you run multiple times. Type
 
  > bifiltration.py -h
 
-for explanations of arguments.
+for explanations of arguments, or read the scripts themselves, which are annotated.
 
 
-    *** HOW TO USE ***
+
+      *** HOW TO USE ***
 
 * Install the conda environment using the supplied yaml file:
   
@@ -38,7 +41,6 @@ for explanations of arguments.
   > conda activate pholo
 
 * Install PersLoop using the following commands:
-  note persloop requires the boost libraries.
 
   > git clone https://github.com/Sayan-m90/Persloop-viewer.git
   > cd Persloop-viewer
@@ -49,14 +51,18 @@ for explanations of arguments.
   > cd bin
   > cmake ../perloop-src
   > cmake --build .
+  
+  NB: Persloop requires the boost libraries to install.
 
-* In misc.py, change the headfolder variable to the full path of wherever
-  you are putting this repo, and also update the persloopfolder variable
-  to wherever you put the PersLoop executable,
+
+* In misc.py, you can change the headfolder variable to the full path of wherever
+  you are putting this repo (it defaults to where the misc script is). You also 
+  must update the persloopfolder variable to wherever you put the PersLoop executable,
 
   e.g. persloopfolder = "~/Persloop-viewer/bin/src/"
 
   Note it needs to point to the one in /bin/src to work.
+
 
 * To run a generic example using existing data, you can do
 
@@ -68,7 +74,7 @@ for explanations of arguments.
 
 
 
-    *** ADDING NEW DATASETS ***
+      *** ADDING NEW DATASETS ***
 
 
 When adding a new dataset, you need to update loader.py appropriately.
@@ -79,7 +85,7 @@ which handle what angle to view the dataset from in 3D etc.
 
 
 
-    *** CONTACT DETAILS AND BUGS ***
+      *** CONTACT DETAILS AND BUGS ***
 
 Please report bugs as an issue, or email kristianjstr@gmail.com
 
