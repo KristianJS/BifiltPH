@@ -52,9 +52,11 @@ for explanations of arguments.
 
 * In misc.py, change the headfolder variable to the full path of wherever
   you are putting this repo, and also update the persloopfolder variable
-  to wherever you put PersLoop,
+  to wherever you put the PersLoop executable,
 
   e.g. persloopfolder = "~/Persloop-viewer/bin/src/"
+
+  Note it needs to point to the one in /bin/src to work.
 
 * To run a generic example using existing data, you can do
 

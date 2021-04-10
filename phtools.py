@@ -11,7 +11,7 @@ from misc import persloopfolder
 
 peps = 10**(-7)
 threeD = True
-assert threeD
+assert threeD  #PersLoop is not reliable or stable for dimensions>3
 
 
 #Compute Euclidean distance between two points defined by data indices
