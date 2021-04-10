@@ -301,7 +301,7 @@ def phasespace_points(name, eofs=False, dims=[0,1,2], cb=True, save=True):
 
 #Plot of filtered phase space with and without loops overlaid on top
 def phasespace_loops(name, dims=[0,1,2], num2show=2, max_edge=None, min_pers=None, sparse=0.7, pre_sparse=None,\
-                          method='GaussianKDE', num_bins=120, eofs=False,\
+                          method='GaussianKDE', num_bins=160, eofs=False,\
                           identifier=None, reverse_order=False,\
                           save=True):
     
@@ -412,7 +412,10 @@ def phasespace_loops(name, dims=[0,1,2], num2show=2, max_edge=None, min_pers=Non
 
     #Begin plotting
     fig = plt.figure(figsize=fsize)
-    axnames=['x', 'y', 'z']
+    if eofs:
+        axnames = ['PC1', 'PC2', 'PC3']
+    else:
+        axnames=['x', 'y', 'z']
     
     d0 = dims[0]
     d1 = dims[1]
@@ -496,112 +499,107 @@ def phasespace_loops(name, dims=[0,1,2], num2show=2, max_edge=None, min_pers=Non
 
 
 
-#Bespoke plot for each dataset
-def phasespace_bespoke(name, save=True):
-    
-    print("(phasespace_bespoke) Generating phase space plot with long-lived cycles...")
+#Plot of phase space with the N longest lived components coloured in
+def phasespace_comps(name, dims=[0,1,2], max_edge=None, min_pers=None, sparse=0.7, pre_sparse=None,\
+                          method='GaussianKDE', num_bins=160, eofs=False,\
+                          num2show=10, num2keep=5, identifier=None,\
+                          reverse_order=False, save=True):
 
-    if name == 'Lorenz63':
-        tname = name
-        max_edge = 5.0
-        min_pers = 0.25
-        pre_sparse = 0.05
-        sparse = 0.7
-        percs = [80,60,20]
-        cycles = ['loops', 'loops', 'comps']
+    print("(phasespace_comps) Generating phase space plot with long-lived components...")
+
+
+    #Get basename
+    if 'Perc' in name:
+        basename, percstr = name.split('-')
+        perc_to_keep = percstr.split('Perc')[-1]
+
+
+    #Get filtered data and normalise axes
+    #filtdata = loader.load_filt(name, method, identifier, num_bins, perc_to_keep=None)
+    filtdata = loader.load_from_pers(name, num_bins=num_bins, max_edge=max_edge, min_pers=min_pers,\
+                                     sparse=sparse, pre_sparse=pre_sparse, method=method,\
+                                     reverse_order=reverse_order, eofs=eofs)
+
+    #normdata = filtdata/(filtdata.std(axis=0))
+
+    normdata = filtdata
+
+
+    #If max_edge/min_pers = None, determine what these actually are
+    if (max_edge is None):
+        max_edge = default_maxedge(loader.load_filt(name, method, identifier, num_bins, perc_to_keep=None,\
+                                   reverse_order=reverse_order, eofs=eofs))
+
+    if min_pers is None:
+        min_pers = default_minpers(loader.load_filt(name, method, identifier, num_bins, perc_to_keep=None,\
+                                   reverse_order=reverse_order, eofs=eofs), name)
+
+    max_edge_str = "{0:.2f}".format(max_edge) #strip away decimals to avoid overly long filenames
+    min_pers_str = "{0:.2f}".format(min_pers)
+    sparse_str = "{0:.2f}".format(sparse)
+
+    if pre_sparse is None:
+        presparse_str = '0'
+    else:
+        presparse_str = "{0:.3f}".format(pre_sparse)
+
+    #Get the components
+    components = loader.load_comps(name, num2keep,\
+                                   max_edge, min_pers,\
+                                   sparse, pre_sparse,\
+                                   method, eofs=eofs, reverse_order=reverse_order)
+
+    #Some sensible choices for our datasets
+    if ('Lorenz' in name) and not('Lorenz96' in name):
         ss = 0.1
-        alpha = 0.05
-        elev = 10
-        azim = -40
-        xlims = (-2.5,2.5)
-        ylims = (-2.5,2.5)
-        zlims = (0,4.5)
-        eofs = False
-        num2show = 1
-        num_bins = 160
-        method = 'GaussianKDE'
+        alpha = 0.01
+        if eofs:
+            elev = 10
+            azim = -80
+            xlims = (-3,3)
+            ylims = (-3,3)
+            zlims = (-1,1)
+        else:
+            elev = 10
+            azim = -40
+            xlims = (-2,2)
+            ylims = (-2,2)
+            zlims = (0,4)
 
-    elif name == 'Lorenz96':
-        tname = name
-        max_edge = 5.0
-        min_pers = 0.25
-        pre_sparse = 0.05
-        sparse = 0.7
-        percs = [50,20,10]
-        cycles = ['comps', 'loops', 'comps']
+    elif 'Lorenz96' in name:
         ss = 0.1
-        alpha = 0.05
-        elev = 50
-        azim = 20
-        xlims = (-2,2)
-        ylims = (-2,2)
-        zlims = (-2,2)
-        eofs = True
-        num2show = 3
-        num_bins = 160
-        method = 'GaussianKDE'
+        alpha = 0.01
+        if eofs:
+            elev = 50
+            azim = 20
+            xlims = (-2,2)
+            ylims = (-2,2)
+            zlims = (-2,2)
+        else:
+            elev = 50
+            azim = 20
+            xlims = (-2,2)
+            ylims = (-2,2)
+            zlims = (-2,2)
 
-    elif 'CDV' in name:     
-        tname = name
-        max_edge = 5.0
-        min_pers = 0.50
-        pre_sparse = 0.005
-        sparse = 0.7
-        percs = [70,50,20]
-        cycles = ['loops', 'loops', 'comps']
-        ss = 0.4
-        alpha = 0.05
+    elif 'CDV' in name:
+        ss = 0.1
+        alpha = 0.01
         elev = 10
         azim = -40
         xlims = (-3,3)
         ylims = (-2,4)
         zlims = (-4,4)
-        eofs = True
-        num2show = 3
-        num_bins = 160
-        method = 'EOFbinmeans'
 
     elif 'JetLat' in name:
-        tname = name
-        max_edge = 3.50
-        min_pers = 0.15
-        pre_sparse = None
-        sparse = 0.7
-        percs = [70,50,10]
-        cycles = ['comps', 'comps', 'comps']
         ss = 1.0
         alpha = 0.2
         elev = 10
         azim = -40
-        xlims = (4.5,7.5)
-        ylims = (-2,2)
-        zlims = (-2,2)
-        eofs = False
-        num2show = 3
-        num_bins = 160
-        method = 'GaussianKDE'
+        xlims = (None,None)
+        ylims = (None,None)
+        zlims = (None,None)
 
-    elif name == 'Gaussian':
-        tname = name
-        max_edge = 2.50
-        min_pers = 0.15
-        pre_sparse = 0.050
-        sparse = 0.7
-        percs = [70,40,10]
-        cycles = ['comps', 'comps', 'comps']
-        ss = 1.0
-        alpha = 0.2
-        elev = 10
-        azim = -40
-        xlims = (-2,2)
-        ylims = (-2,2)
-        zlims = (-2,2)
-        eofs = False
-        num2show = 3
-        num_bins = 160
-        method = 'GaussianKDE'
-
-    
     else:
         ss = 0.1
         alpha = 0.1
@@ -610,160 +608,75 @@ def phasespace_bespoke(name, save=True):
         xlims = (None,None)
         ylims = (None,None)
         zlims = (None,None)
-    
-    #Get basename
-    if 'Perc' in name:
-        basename, percstr = name.split('-')
-        perc_to_keep = percstr.split('Perc')[-1]
-    
 
-    filt_dict = {}
-    cycle_dict = {}
-
-    filt_dict[100] = loader.load_filt('%s-Perc%s' % (name, 100), method, None,\
-                                                  num_bins=160, perc_to_keep=100,\
-                                                  reverse_order=False, eofs=eofs, normalise=False)[:,:100000]
-
-    
-
-    for n in range(len(percs)):
-
-        filtdata = loader.load_from_pers('%s-Perc%s' % (name, percs[n]), num_bins=num_bins, max_edge=max_edge, min_pers=min_pers,\
-                                         sparse=sparse, pre_sparse=pre_sparse, method=method,\
-                                         reverse_order=False, eofs=eofs)
-        
-        if cycles[n] == 'comps':
-            cycle = loader.load_comps('%s-Perc%s' % (name, percs[n]), 5,\
-                                      max_edge, min_pers,\
-                                      sparse, pre_sparse,\
-                                      method, eofs=eofs, reverse_order=False)
-        else:
-            cycle = loader.load_loops('%s-Perc%s' % (name, percs[n]), max_edge=max_edge, min_pers=min_pers,\
-                                     sparse=sparse, pre_sparse=pre_sparse,\
-                                     method=method, reverse_order=False, eofs=eofs)
-
-        filt_dict[percs[n]] = filtdata
-        cycle_dict[percs[n]] = cycle
-
-
-    
-    #Plotting
-    colors = ['r', 'b', 'g']
-    tits = ['(b)', '(c)', '(d)', '(e)', '(f)']
-    d0 = 0
-    d1 = 1
-    d2 = 2
-
-    if eofs:
-        axnames = ['PC1', 'PC2', 'PC3']
-    else:
-        axnames=['x', 'y', 'z']
-   
 
     fig = plt.figure(figsize=fsize)
-    
-    #First the 100% data
-    ax = plt.subplot(221, projection = '3d')
-    plot_3d_generic(filt_dict[100][d0,:], filt_dict[100][d1,:], filt_dict[100][d2,:],\
+    ax = plt.subplot(111, projection = '3d')
+    axnames=['x', 'y', 'z']
+    colors = ['r', 'b', 'g', 'm', 'y', 'c', 'tab:orange']*100
+    d0 = dims[0]
+    d1 = dims[1]
+    d2 = dims[2]
+
+
+    ax = plt.subplot(111, projection = '3d')
+    plot_3d_generic(normdata[d0,:], normdata[d1,:], normdata[d2,:],\
                     ax,\
                     label=None,\
-                    title='(a) %s: 100%% densest' % tname,\
+                    title=None,\
                     color='k',\
                     marker='o',\
-                    s=0.8,\
+                    s=ss,\
                     xlims=xlims,\
                     ylims=ylims,\
                     zlims=zlims,\
                     alpha=alpha,\
                     axnames=axnames,\
                     elev=elev, azim=azim)
-  
 
-    #Then the specifically chosen thresholds
-    for n in range(len(percs)):
-        normdata = filt_dict[percs[n]]
+    for n in range(min(len(components), num2show)):
+        points = components[n]
+        if len(points) < 4:
+            s = 20.
+        else:
+            s = 5.0
+        plot_3d_generic(normdata[d0,points], normdata[d1,points], normdata[d2,points],\
+                    ax,\
+                    label=None,\
+                    title=None,\
+                    color=colors[n],\
+                    marker='o',\
+                    s=s,\
+                    xlims=xlims,\
+                    ylims=ylims,\
+                    zlims=zlims,\
+                    alpha=0.5,\
+                    axnames=axnames,\
+                    elev=elev, azim=azim)
 
-        ax = plt.subplot('22%s' % (n+2), projection = '3d')
-        if cycles[n] == 'loops':
-            if name == 'Lorenz96':
-                loop_list = cycle_dict[percs[n]][:3]
-            else:
-                loop_list = cycle_dict[percs[n]][:2]
+    ax.set_title('%s: oldest %s components' % (name, num2show))
 
-            if name == 'CDV':
-                lw = 2.5
-                alpha1 = 0.4
-            else:
-                lw = 3.0
-                alpha1 = 0.4
-
-            plot_3d_generic(normdata[d0,:], normdata[d1,:], normdata[d2,:],\
-                            ax,\
-                            label=None,\
-                            title='%s %s: %s%% densest' % (tits[n], tname, percs[n]),\
-                            color='k',\
-                            marker='o',\
-                            s=ss,\
-                            xlims=xlims,\
-                            ylims=ylims,\
-                            zlims=zlims,\
-                            alpha=alpha1,\
-                            axnames=axnames,\
-                            elev=elev, azim=azim)
-
-            for i in range(len(loop_list)):
-                col = colors[i]
-                l = loop_list[i]
-                ax.plot(l[:,d0], l[:,d1], l[:,d2], color=col, alpha=1., linewidth=lw)
-
-        elif cycles[n] == 'comps':
-            components = cycle_dict[percs[n]]
-
-            for k in range(min(len(components), num2show)):
-                points = components[k]
-                if name in ['Lorenz96', 'CDV', 'Gaussian', 'JetLat']:
-                    alpha2 = 0.4
-                else:
-                    alpha2 = 0.2
-                if len(points) < 4:
-                    s = 20.
-                    alpha2 = 0.8 
-                else:
-                    s = 0.5
-                if k == 0:
-                    titx = '%s %s: %s%% densest' % (tits[n], tname, percs[n])
-                else:
-                    titx = None
-
-                plot_3d_generic(normdata[d0,points], normdata[d1,points], normdata[d2,points],\
-                                ax,\
-                                label=None,\
-                                title=titx,\
-                                color=colors[k],\
-                                marker='o',\
-                                s=s,\
-                                xlims=xlims,\
-                                ylims=ylims,\
-                                zlims=zlims,\
-                                alpha=alpha2,\
-                                axnames=axnames,\
-                                elev=elev, azim=azim)
-
-    
-    
     #Saving/showing
+    plt.tight_layout()
     if save:
-        fname = '%s_chosen_thresholds.png' % name
-        fpath = '%s' % figpath
+        if eofs:
+            fname = '%s_%s_EOFs_maxe_%s_minp_%s_sp_%s_presp_%s_phasespace_%s-oldest-comps.%s' % \
+                   (name, method, max_edge_str, min_pers_str, sparse_str, presparse_str, num2show, fmt)
+        else:
+            fname = '%s_%s_maxe_%s_minp_%s_sp_%s_presp_%s_phasespace_%s-oldest-comps.%s' % \
+                   (name, method, max_edge_str, min_pers_str, sparse_str, presparse_str, num2show, fmt)
+        if reverse_order:
+            fpath = '%s/%s/reversed/%s' % (figpath, basename, name)
+        else:
+            fpath = '%s/%s/standard/%s' % (figpath, basename, name)
         figname = '%s/%s' % (fpath, fname)
         make_path(fpath)
         plt.savefig(figname, format=fmt, dpi=dpi)
         plt.close()
-        print("(phasespace_bespoke) Figure saved as %s" % figname)
+        print("(phasespace_comps) Figure saved as %s" % figname)
         print(100*'-')
     else:
         plt.show()
-
 
 
 

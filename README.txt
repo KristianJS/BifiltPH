@@ -38,6 +38,7 @@ for explanations of arguments.
   > conda activate pholo
 
 * Install PersLoop using the following commands:
+  note persloop requires the boost libraries.
 
   > git clone https://github.com/Sayan-m90/Persloop-viewer.git
   > cd Persloop-viewer

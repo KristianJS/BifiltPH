@@ -14,8 +14,7 @@ Random stuff which is useful
 
 #Top level directory of code
 headfolder  = os.path.dirname(os.path.realpath(__file__))
-print(headfolder)
-persloopfolder = None
+persloopfolder = None 
 assert persloopfolder is not None, "Please specify persloop location"
 
 
