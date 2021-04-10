@@ -612,7 +612,12 @@ def phasespace_comps(name, dims=[0,1,2], max_edge=None, min_pers=None, sparse=0.
 
     fig = plt.figure(figsize=fsize)
     ax = plt.subplot(111, projection = '3d')
-    axnames=['x', 'y', 'z']
+    
+    if eofs:
+        axnames = ['PC1', 'PC2', 'PC3']
+    else:
+        axnames=['x', 'y', 'z']
+    
     colors = ['r', 'b', 'g', 'm', 'y', 'c', 'tab:orange']*100
     d0 = dims[0]
     d1 = dims[1]
