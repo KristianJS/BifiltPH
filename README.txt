@@ -93,6 +93,23 @@ Please forgive idiosyncracies of this code. An attempt was made to balance
 flexibility, ease of use and readability. No doubt we failed in many regards.
 
 
+
+     *** ACKNOWLEDGEMENTS ***
+
+Special thanks to Hannah Christensen for allowing us to upload the Lorenz 96
+data she generated, as described in the following papers:
+
+* Arnold H. M., Moroz I. M. and Palmer T. N. (2013), 
+  Stochastic parametrizations and model uncertainty in the Lorenz ’96 system,
+  Phil. Trans. R. Soc. A.3712011047920110479,
+   https://doi.org/10.1098/rsta.2011.0479
+
+* Christensen, H.M., Moroz, I.M. & Palmer, T.N. (2015), 
+  Simulating weather regimes: impact of stochastic and perturbed parameter schemes
+  in a simple atmospheric model. Clim Dyn 44, 2195–2214,
+  https://doi.org/10.1007/s00382-014-2239-9
+
+
 ==================================================================================
 Authors: K. Strommen, M. Chantry, J. Dorrington, N. Otter
 ==================================================================================
