@@ -8,4 +8,4 @@ dependencies:
   - matplotlib
   - scipy
   - eofs
-prefix: /Users/strommen/opt/anaconda3/envs/pholo
+prefix: pholo
