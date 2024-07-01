@@ -645,7 +645,7 @@ def phasespace_comps(name, dims=[0,1,2], max_edge=None, min_pers=None, sparse=0.
             s = 20.
         else:
             s = 5.0
-        plot_3d_generic(normdata[d0,points], normdata[d1,points], normdata[d2,points],\
+        plot_3d_generic(normdata[d0,points.astype(int)], normdata[d1,points.astype(int)], normdata[d2,points.astype(int)],\
                     ax,\
                     label=None,\
                     title=None,\

@@ -66,7 +66,7 @@ def oldest_components(data, filt, barcode, N):
     datalength = data.shape[-1]
     print(" Datalength = %s" % datalength)
 
-    filt_vals = np.array([filt[n][1] for n in range(len(filt))])
+    filt_vals = np.array([filt[n][1] for n in range(len(filt))]) #--- OLD 3.1.1 version
     death_times = []
     for component in barcode:
         if component[0] == 0: #we only want deathtimes of components (=H0, hence the 0 value)
@@ -191,6 +191,7 @@ def oldest_components(data, filt, barcode, N):
         components_clean.append(np.array(list(set(comp))))
     
     components_clean = components
+    #components = components_clean
     
     #We also want the number of points of each component
     comp_sizes = []
@@ -241,7 +242,8 @@ def proc4persloop(data,nme,num_comp_to_keep=10,max_edge=10,min_pers=1,sparse=Non
         print(" Data is too big! Subselecting first %s points" % maxlength)
         data = data[:maxlength,:]
     
-    rc = gd.RipsComplex(data,max_edge_length=max_edge,sparse=sparse)
+    #rc = gd.RipsComplex(data,max_edge_length=max_edge,sparse=sparse)
+    rc = gd.RipsComplex(points=data,max_edge_length=max_edge,sparse=sparse)
     Rips_simplex_tree = rc.create_simplex_tree(max_dimension=2)
     print(' Tree created')
 
@@ -250,7 +252,8 @@ def proc4persloop(data,nme,num_comp_to_keep=10,max_edge=10,min_pers=1,sparse=Non
     print(' Barcodes done')
     print('   Printing loops:')
     loop_births, loop_deaths = printloops(BarCodes_Rips0)
-    Filt = Rips_simplex_tree.get_filtration()
+    Filt = Rips_simplex_tree.get_filtration() #--- OLD VERSION: 3.1.1.
+    #Filt = Rips_simplex_tree.get_filtration().__next__() #COMPATIBLE WITH 3.9 version
     print(' Filtration gotten')
 
    
@@ -269,7 +272,7 @@ def proc4persloop(data,nme,num_comp_to_keep=10,max_edge=10,min_pers=1,sparse=Non
     #Now get the components/death_times and save output
     components, death_times, comp_sizes = oldest_components(data.T, Filt, BarCodes_Rips0, num_comp_to_keep)
     fname = nme + '%s-oldest-comps.npy' % num_comp_to_keep 
-    np.save(fname, components)
+    np.save(fname, np.array(components, dtype=object))
     fname = nme + '%s-oldest-comps_deathtimes.txt' % num_comp_to_keep 
     np.savetxt(fname, np.array(death_times))
     fname = nme + '%s-oldest-comps_sizes.npy' % num_comp_to_keep 
